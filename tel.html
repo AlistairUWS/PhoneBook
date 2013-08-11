@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html manifest="cache.manifest">
+<head>
+    <title>Phone Book App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <style type="text/css">
+        .img {padding-left:70px; }
+        h1 {text-align: center;}
+    </style>
+    <script src="tel.js"></script>
+</head>
+<body>
+<div data-role="page" id="main">
+
+    <div data-role="header">
+        <heading>
+            <h1>Phone Book</h1>
+        </heading>
+    </div>
+
+    <div data-role="content">
+        <ul id="list" data-role="listview" data-filter="true" data-autodividers="true">
+            <!-- Starts up as an empty list.  Items are added from
+                 localStorage in $(document).ready() -->
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <nav>
+            <a href="#entry" data-role="button"
+               data-inline="true" data-mini="true"
+               data-icon="plus" id="add">Add Item</a>
+        </nav>
+    </div>
+</div>
+
+<div data-role="page" id="entry">
+
+    <div data-role="header">
+        <h1 id="name">Fred Bloggs</h1>
+        <a href="#" data-rel="back" data-icon="back">Back</a>
+    </div>
+
+    <div data-role="content">
+        <form>
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname"/>
+            <label for="mobile">Mobile number:</label>
+            <input type="tel" id="mobile"/><a data-role="button" id="mobilebutton" data-mini="true"
+                                              href="">Call</a>
+            <label for="home">Home number:</label>
+            <input type="tel" id="home"/><a data-role="button" id="homebutton" data-mini="true"
+                                            href="">Call</a>
+            <label for="email">Email:</label>
+            <input type="email" id="email"/><a data-role="button" id="mailbutton" data-mini="true"
+                                               href="">Send email</a>
+            <label for="bday">Birthday:</label>
+            <input type="date" id="bday"/>
+        </form>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <nav>
+            <a href="#main" id="update" data-role="button" data-inline="true"
+               data-mini="true" data-icon="refresh">Update</a>
+            <a href="#main" id="del" data-role="button" data-inline="true"
+               data-mini="true" data-icon="minus" >Delete Item</a>
+        </nav>
+
+    </div>
+</div>
+</body>
+<script>
+    // Note – this script inserts letter dividers into the "#list" element on the
+    // main page.
+    $(document).on("pageinit", "#main", function(){
+        $("#list").listview({
+            autodividers: true,
+            autodividersSelector: function (li) {    // Do for each entry
+                var out = li.text().substring(0, 1); // Use initial letter of surname
+                return out;
+            }
+        }).listview('refresh');
+    });
+</script>
+</html>
